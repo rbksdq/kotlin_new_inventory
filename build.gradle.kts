@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.util.regex.Pattern.compile
 
 plugins {
 	id("org.springframework.boot") version "2.6.4"
@@ -33,6 +34,7 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	compile("org.mockito:mockito-core:4.1.0")
 }
 
 tasks.withType<KotlinCompile> {

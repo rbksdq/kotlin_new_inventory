@@ -1,11 +1,8 @@
 package com.learning.springbootkotlinh2
 
-import com.learning.springbootkotlinh2.controller.PricingController
-import com.learning.springbootkotlinh2.controller.ProductController
 import com.learning.springbootkotlinh2.entity.Pricing
 import com.learning.springbootkotlinh2.entity.Product
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -13,7 +10,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.client.getForEntity
 import org.springframework.boot.test.web.client.postForObject
 import org.springframework.http.HttpStatus
-import org.springframework.test.annotation.Rollback
 import java.time.LocalDate
 
 @SpringBootTest (webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
