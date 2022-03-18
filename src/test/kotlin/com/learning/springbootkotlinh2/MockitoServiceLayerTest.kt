@@ -2,6 +2,7 @@ package com.learning.springbootkotlinh2
 
 import com.learning.springbootkotlinh2.entity.Pricing
 import com.learning.springbootkotlinh2.entity.Product
+import com.learning.springbootkotlinh2.exceptions.ProductExistException
 import com.learning.springbootkotlinh2.service.PricingService
 import com.learning.springbootkotlinh2.service.ProductService
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
@@ -26,7 +27,7 @@ class MockitoServiceLayerTest {
         val responseEntity : ResponseEntity<List<Product>> = ResponseEntity<List<Product>>(listOf<Product>(),HttpStatus.OK)
         val createProduct= Product(1,"dalda", LocalDate.now(), LocalDate.now(),true)
         service= Mockito.mock(ProductService::class.java)
-        Mockito.`when`(service.createProduct(createProduct)).thenReturn(ResponseEntity<Product>(HttpStatus.OK))
+        Mockito.`when`(service.createProduct(createProduct)).thenReturn(ProductExistException("product exists in repo"))//(ResponseEntity<Product>(HttpStatus.OK))
         Mockito.`when`(service.getAllProducts()).thenReturn(responseEntity)
         assertThat(service.getAllProducts().statusCode).isEqualTo(HttpStatus.OK)
     }

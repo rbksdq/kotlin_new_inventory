@@ -37,11 +37,16 @@ class ProductController(val productService: ProductService, val productRepo: Pro
     @PostMapping("/products")
 
     fun createProduct(@RequestBody product: Product) : ResponseEntity<Product>{
-        val product = productService.createProduct(product)//productRepo.save(product)
-        if(ObjectUtils.isEmpty(product)){
-            return ResponseEntity<Product>(HttpStatus.BAD_REQUEST)
-        }
-        return ResponseEntity(HttpStatus.CREATED)
+       try {
+           val product = productService.createProduct(product)//productRepo.save(product)
+           if(ObjectUtils.isEmpty(product)){
+               return ResponseEntity<Product>(HttpStatus.BAD_REQUEST)
+           }
+           return ResponseEntity(HttpStatus.CREATED)
+       }
+       catch (e:Exception){
+           return ResponseEntity(HttpStatus.BAD_GATEWAY)
+       }
     }
 //    fun createProduct(@RequestBody product: Product, uri: UriComponentsBuilder) : ResponseEntity<Product>{
 //        val product = productRepo.save(product)
@@ -55,7 +60,12 @@ class ProductController(val productService: ProductService, val productRepo: Pro
 
     @PutMapping("/products/{productId}")
     fun updateProductById(@PathVariable("productId") productId: Long, @RequestBody product: Product): ResponseEntity<Product> {
-    return  productService.updateProductById(productId, product)
+        try {
+            return  productService.updateProductById(productId, product)
+        }
+        catch (e: Exception){
+            return ResponseEntity<Product>(HttpStatus.BAD_GATEWAY)
+        }
     }
 //        return productRepo.findById(productId).map {
 //                productDetails ->
@@ -70,7 +80,11 @@ class ProductController(val productService: ProductService, val productRepo: Pro
 
     @DeleteMapping("/products/{productId}")
     fun deleteProductById(@PathVariable("productId") productId: Long): ResponseEntity<Void> {
-        return productService.deleteProductById(productId)
+        return try {
+            productService.deleteProductById(productId)
+        } catch (e: Exception){
+            ResponseEntity(HttpStatus.BAD_GATEWAY)
+        }
     }
 //        val product = productRepo.findById(productId)
 //        if (product.isPresent) {

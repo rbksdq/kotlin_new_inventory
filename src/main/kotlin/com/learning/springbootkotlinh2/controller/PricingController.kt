@@ -29,11 +29,15 @@ class PricingController(private val pricingService: PricingService,private val p
     @PostMapping("/pricing")
 
     fun createPricing(@RequestBody pricing: Pricing) : ResponseEntity<Pricing>{
-        val pricing = pricingService.createPricing(pricing)//productRepo.save(product)
-        if(ObjectUtils.isEmpty(pricing)){
-            return ResponseEntity<Pricing>(HttpStatus.BAD_REQUEST)
+        try {
+            val pricing = pricingService.createPricing(pricing)//productRepo.save(product)
+            if(ObjectUtils.isEmpty(pricing)){
+                return ResponseEntity<Pricing>(HttpStatus.BAD_REQUEST)
+            }
+            return ResponseEntity(HttpStatus.CREATED)
+        }catch (e:Exception){
+            return ResponseEntity<Pricing>(HttpStatus.BAD_GATEWAY)
         }
-        return ResponseEntity(HttpStatus.CREATED)
     }
 //    fun createPricing(@RequestBody pricing: Pricing, uri: UriComponentsBuilder) : ResponseEntity<Pricing>{
 //        val pricing = pricingRepo.save(pricing)
@@ -46,7 +50,13 @@ class PricingController(private val pricingService: PricingService,private val p
 //    }
     @PutMapping("/pricing/{pricingId}")
     fun updatePricingById(@PathVariable("pricingId") pricingId: Long, @RequestBody pricing: Pricing): ResponseEntity<Pricing> {
+    try {
         return pricingService.updatePricingById(pricingId, pricing)
+    }
+    catch (e: Exception){
+        return ResponseEntity<Pricing>(HttpStatus.BAD_GATEWAY)
+    }
+
 //        return pricingRepo.findById(pricingId).map {
 //                pricingDetails ->
 //            val updatedPricing: Pricing = pricingDetails.copy(
@@ -62,7 +72,12 @@ class PricingController(private val pricingService: PricingService,private val p
 
     @DeleteMapping("/pricing/{pricingId}")
     fun deletePricingById(@PathVariable("pricingId") pricingId: Long): ResponseEntity<Void> {
-        return pricingService.deletePricingById(pricingId)
+        return try {
+            pricingService.deletePricingById(pricingId)
+        } catch (e: Exception){
+            ResponseEntity(HttpStatus.BAD_GATEWAY)
+        }
+
     }
 //        val pricing = pricingRepo.findById(pricingId)
 //        if (pricing.isPresent) {

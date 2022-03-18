@@ -28,25 +28,38 @@ class PricingService(private val pricingRepo: PricingRepo) {
     }
 
     fun updatePricingById(pricingId: Long, pricing: Pricing): ResponseEntity<Pricing> {
-        return pricingRepo.findById(pricingId).map {
-                pricingDetails ->
-            val updatedPricing: Pricing = pricingDetails.copy(
-                pricingName = pricing.pricingName,
-                pricingAmount = pricing.pricingAmount,
-                modifiedDate = LocalDate.now(),
-                isActive = pricing.isActive,
-                productId = pricing.productId
-            )
-            ResponseEntity(pricingRepo.save(updatedPricing), HttpStatus.OK)
-        }.orElse(ResponseEntity<Pricing>(HttpStatus.INTERNAL_SERVER_ERROR))
+        try {
+            return pricingRepo.findById(pricingId).map {
+                    pricingDetails ->
+                val updatedPricing: Pricing = pricingDetails.copy(
+                    pricingName = pricing.pricingName,
+                    pricingAmount = pricing.pricingAmount,
+                    modifiedDate = LocalDate.now(),
+                    isActive = pricing.isActive,
+                    productId = pricing.productId
+                )
+                ResponseEntity(pricingRepo.save(updatedPricing), HttpStatus.OK)
+            }.orElse(ResponseEntity<Pricing>(HttpStatus.INTERNAL_SERVER_ERROR))
+        }
+        catch (e: Exception){
+            throw Exception(e.message)
+        }
+
     }
 
     fun deletePricingById(pricingId: Long): ResponseEntity<Void> {
-        val pricing = pricingRepo.findById(pricingId)
-        if (pricing.isPresent) {
-            pricingRepo.deleteById(pricingId)
-            return ResponseEntity<Void>(HttpStatus.NO_CONTENT)
-        }
-        return ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR)
+       try {
+           val pricing = pricingRepo.findById(pricingId)
+           if (pricing.isPresent) {
+               pricingRepo.deleteById(pricingId)
+               return ResponseEntity<Void>(HttpStatus.NO_CONTENT)
+           }
+
+           return ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR)
+       }catch (e:Exception){
+           throw Exception(e.message)
+
+       }
     }
+
 }

@@ -10,6 +10,8 @@ data class Product (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val productId : Long,
+    // validation
+    @Column(name = "PRODUCT_NAME", length = 50, nullable = false, unique = true)
     val productName : String,
     val createdDate : LocalDate,
     val modifiedDate : LocalDate,

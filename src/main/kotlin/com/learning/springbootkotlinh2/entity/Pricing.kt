@@ -11,6 +11,8 @@ data class Pricing(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val pricingId : Long,
+    // validation
+    @Column(name = "Pricing_NAME", length = 50, nullable = false, unique = true)
     val pricingName : String,
     val pricingAmount : Long,
     val createdDate : LocalDate,
