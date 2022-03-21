@@ -1,5 +1,6 @@
 package com.learning.springbootkotlinh2
 
+import com.learning.springbootkotlinh2.dto.ProductDto
 import com.learning.springbootkotlinh2.entity.Pricing
 import com.learning.springbootkotlinh2.entity.Product
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
@@ -35,8 +36,8 @@ class SpringbootKotlinH2ApplicationTests(@Autowired val client: TestRestTemplate
 
 	@Test
 	fun `createProduct`(){
-		val product= Product(1,"dalda", LocalDate.now(), LocalDate.now(),true)
-		client.postForObject<Product>("/products", product)
+		val product= ProductDto(1,"dalda", LocalDate.now(), LocalDate.now(),true)
+		client.postForObject<ProductDto>("/products", product)
 
 		val entity= client.getForEntity<String>("/products")
 		assertThat(entity.statusCode).isEqualTo(HttpStatus.OK)

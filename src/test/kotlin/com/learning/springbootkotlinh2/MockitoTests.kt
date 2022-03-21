@@ -5,25 +5,10 @@ import com.learning.springbootkotlinh2.entity.Product
 import com.learning.springbootkotlinh2.repository.PricingRepo
 import com.learning.springbootkotlinh2.repository.ProductRepo
 import org.assertj.core.api.AssertionsForClassTypes.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
-import org.mockito.Mockito.mock
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.getForEntity
-import org.springframework.boot.test.web.client.postForObject
-import org.springframework.context.annotation.Bean
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
-import org.springframework.stereotype.Repository
-import org.springframework.web.client.RestTemplate
 import java.time.LocalDate
-import javax.lang.model.element.Element
 
 
 class MockitoTests {
