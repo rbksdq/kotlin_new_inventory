@@ -3,11 +3,8 @@ package com.learning.springbootkotlinh2
 import com.learning.springbootkotlinh2.dto.PricingDto
 import com.learning.springbootkotlinh2.dto.ProductDto
 import com.learning.springbootkotlinh2.entity.Pricing
-import com.learning.springbootkotlinh2.exceptions.ProductExistException
-import com.learning.springbootkotlinh2.service.PricingSer
 import com.learning.springbootkotlinh2.service.PricingService
 import com.learning.springbootkotlinh2.service.ProductService
-import org.assertj.core.api.AssertionsForClassTypes.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -23,8 +20,8 @@ class MockitoServiceLayerTest {
     @Mock
     lateinit var pricingService: PricingService
 
-    @Mock
-    lateinit var pSer: PricingSer
+//    @Mock
+//    lateinit var pSer: PricingSer
 
     @Test
     fun `createProductsAndFindAll`(){
@@ -47,15 +44,17 @@ class MockitoServiceLayerTest {
 
     //=====================product service ends here================
 
-//    @Test
-//    fun `createPricingAndFindAll`(){
-//        val responseEntity : ResponseEntity<List<Pricing>> = ResponseEntity<List<Pricing>>(listOf<Pricing>(),HttpStatus.OK)
-//        val createPricing= PricingDto(1,"dalda Oil",1000, LocalDate.now(), LocalDate.now(),true,1)
-//        pricingService= Mockito.mock(PricingService::class.java)
-//        Mockito.`when`(pricingService.createPricing(createPricing)).thenReturn(ResponseEntity<Pricing>(HttpStatus.OK))
-//        Mockito.`when`(pricingService.getAllPricing()).thenReturn(responseEntity)
-//        assertThat(pricingService.getAllPricing().statusCode).isEqualTo(HttpStatus.OK)
-//    }
+    @Test
+    fun `createPricingAndFindAll`(){
+        val responseEntity : ResponseEntity<List<Pricing>> = ResponseEntity<List<Pricing>>(listOf<Pricing>(),HttpStatus.OK)
+        val pricingList: MutableList<PricingDto> = mutableListOf()
+        val createPricing= PricingDto(1,"dalda Oil",1000, LocalDate.now(), LocalDate.now(),true,1)
+        pricingList.add(createPricing)
+        pricingService= Mockito.mock(PricingService::class.java)
+        Mockito.`when`(pricingService.createPricing(createPricing)).thenReturn(createPricing)//(ResponseEntity<Pricing>(HttpStatus.OK))
+        Mockito.`when`(pricingService.getAllPricing()).thenReturn(pricingList)//(responseEntity)
+      //  assertThat(pricingService.getAllPricing().statusCode).isEqualTo(HttpStatus.OK)
+    }
 
     @Test
     fun `deletePricing`(){
@@ -64,14 +63,14 @@ class MockitoServiceLayerTest {
         Mockito.`when`(pricingService.deletePricingById(1))
     }
 //
-//    @Test
-//    fun `updatePricing`(){
-//        val responseEntity : ResponseEntity<List<Pricing>> = ResponseEntity<List<Pricing>>(listOf<Pricing>(),HttpStatus.OK)
-//        val createPricing= PricingDto(1,"dalda Oil",1000, LocalDate.now(), LocalDate.now(),true,1)
-//        val updatePricing= PricingDto(1,"Meezan Oil",1000, LocalDate.now(), LocalDate.now(),true,1)
-//        pricingService= Mockito.mock(PricingService::class.java)
-//        Mockito.`when`(pricingService.createPricing(createPricing)).thenReturn(ResponseEntity<Pricing>(HttpStatus.OK))
-//        Mockito.`when`(pricingService.updatePricingById(createPricing.pricingId, updatePricing)).thenReturn(ResponseEntity<Pricing>(HttpStatus.OK))
-//        //assertThat(pricingService.getAllPricing().statusCode).isEqualTo(HttpStatus.OK)
-//    }
+    @Test
+    fun `updatePricing`(){
+        val responseEntity : ResponseEntity<List<Pricing>> = ResponseEntity<List<Pricing>>(listOf<Pricing>(),HttpStatus.OK)
+        val createPricing= PricingDto(1,"dalda Oil",1000, LocalDate.now(), LocalDate.now(),true,1)
+        val updatePricing= PricingDto(1,"Meezan Oil",1000, LocalDate.now(), LocalDate.now(),true,1)
+        pricingService= Mockito.mock(PricingService::class.java)
+        Mockito.`when`(pricingService.createPricing(createPricing)).thenReturn(createPricing)//(ResponseEntity<Pricing>(HttpStatus.OK))
+        Mockito.`when`(pricingService.updatePricingById(createPricing.pricingId,updatePricing)).thenReturn(updatePricing)//(createPricing.pricingId, updatePricing)).thenReturn(ResponseEntity<Pricing>(HttpStatus.OK))
+        //assertThat(pricingService.getAllPricing().statusCode).isEqualTo(HttpStatus.OK)
+    }
 }

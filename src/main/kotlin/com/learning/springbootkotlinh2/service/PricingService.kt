@@ -32,6 +32,10 @@ class PricingService(private val pricingRepo: PricingRepo, private val pricingMa
     }
 
     override fun updatePricingById(pricingDto: PricingDto): PricingDto {
+        TODO("Not yet implemented")
+    }
+
+    fun updatePricingById(pricingDto1: Long, pricingDto: PricingDto): PricingDto {
         getPricingById(pricingDto.pricingId)
         pricingRepo.save(pricingMapper.toEntity(pricingDto))
         return pricingDto
